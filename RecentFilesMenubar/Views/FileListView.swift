@@ -12,7 +12,6 @@ struct FileListView: View {
     let onHoverColor = Color(red: 25 / 255, green: 50 / 255, blue: 61 / 255)
     
     @State private var currentHoverId: UUID?
-//    @State private var isSelected = true
     @StateObject var manager = CustomFileManager.shared
 
     var body: some View {
@@ -27,7 +26,6 @@ struct FileListView: View {
                         .onHover { hover in
                             currentHoverId = fileItem.id
                         }
-
                 }
                 
 //                FileItem(isSelected: .constant(currentHoverIndex == 0))
@@ -67,6 +65,7 @@ struct FileItem: View {
     let item: CustomFile
     let onHoverColor = Color(red: 25 / 255, green: 50 / 255, blue: 61 / 255)
 
+    
     var body: some View {
 
 //            RoundedRectangle(cornerRadius: 10)
@@ -100,8 +99,20 @@ struct FileItem: View {
                 }
                 .frame(maxHeight: .infinity)
                 
-                ShowFinderButtonView(offsetByX: geo.size.width / 3 * 2, offsetByY: geo.size.height / 4 * 2)
-                    .opacity(isSelected ? 1 : 0)
+//                ShowFinderButtonView(offsetByX: geo.size.width / 3 * 2, offsetByY: geo.size.height / 4 * 2)
+                Button("Show in Finder") {
+                    print("Click on file: " + item.filePath)
+//                    NSWorkspace.shared.open(
+//                        URL(
+//                            fileURLWithPath: item.filePath,
+//                            isDirectory: true
+//                        )
+//                    )
+                    NSWorkspace.shared.activateFileViewerSelecting([item.url])
+                }
+                .buttonStyle(ShowInFinder())
+                .offset(x: geo.size.width / 3 * 2, y: geo.size.height / 4 * 2)
+                .opacity(isSelected ? 1 : 0)
                     
             }
             .frame(height: 90, alignment: .center)
@@ -114,15 +125,15 @@ struct FileItem: View {
 }
 
 
-struct ShowFinderButtonView: View {
-    let offsetByX: CGFloat
-    let offsetByY: CGFloat
-    var body: some View {
-        Button("Show in Finder") {}
-            .buttonStyle(ShowInFinder())
-            .offset(x: offsetByX, y: offsetByY)
-    }
-}
+//struct ShowFinderButtonView: View {
+//    let offsetByX: CGFloat
+//    let offsetByY: CGFloat
+//    var body: some View {
+//        Button("Show in Finder") {}
+//            .buttonStyle(ShowInFinder())
+//            .offset(x: offsetByX, y: offsetByY)
+//    }
+//}
 
 struct ShowInFinder: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

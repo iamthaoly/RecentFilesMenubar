@@ -13,7 +13,7 @@ struct CustomFile: Identifiable {
     var filePath: String
     var thumbnail: String = ""
     
-    private var url: URL
+    var url: URL
     
     init(filePath: String) {
         self.filePath = filePath

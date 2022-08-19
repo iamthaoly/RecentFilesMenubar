@@ -66,8 +66,7 @@
 				081D94D42891306200D75A09 /* RecentFilesMenubarApp.swift */,
 				081D94DD2891306400D75A09 /* RecentFilesMenubar.entitlements */,
 				081D94DA2891306400D75A09 /* Preview Content */,
-				08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */,
-				08A00B8928AC6FC10057AD92 /* CustomFile.swift */,
+				083BDBAD28AF6B1B00FCF3F1 /* Models */,
 				08B09E3D28AE375800006A6D /* Utils.swift */,
 			);
 			path = RecentFilesMenubar;
@@ -95,6 +94,15 @@
 				081D94D62891306200D75A09 /* FileListView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		083BDBAD28AF6B1B00FCF3F1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */,
+				08A00B8928AC6FC10057AD92 /* CustomFile.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
