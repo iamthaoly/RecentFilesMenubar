@@ -14,6 +14,8 @@ struct FileListView: View {
     @State private var currentHoverId: UUID?
     @StateObject var manager = CustomFileManager.shared
 
+    var timer = Timer()
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Recent Files")
@@ -40,7 +42,11 @@ struct FileListView: View {
 //                    }
 //                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 1 ? onHoverColor: Color.clear))
 //                    .clipped()
+                Button("TEST") {
+                    manager.queryTerminal()
+                }
             }
+
         }
         .frame(maxWidth: 350)
         .padding(.top, 16.0)
@@ -65,12 +71,10 @@ struct FileItem: View {
     let item: CustomFile
     let onHoverColor = Color(red: 25 / 255, green: 50 / 255, blue: 61 / 255)
 
-    
     var body: some View {
 
 //            RoundedRectangle(cornerRadius: 10)
 //                .background(Color.blue)
-
             GeometryReader { geo in
 //                RoundedRectangle(cornerRadius: 10.0)
                 HStack(alignment: .top) {
