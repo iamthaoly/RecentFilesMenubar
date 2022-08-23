@@ -14,15 +14,12 @@ class CustomFileManager: ObservableObject {
     
     @Published var recentFileList: [CustomFile] = []
     @Published var terminalString = ""
-    let MILLISECOND_TO_RELOAD = 0.5
-    let MAX_RESULTS = 20
     
     var timer: Timer?
-    let REGEX_QUERY = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
 
     // MARK: - PRIVATE
     private init() {
-        fakeData()
+//        fakeData()
     }
     
     private func fakeData() {
@@ -50,7 +47,7 @@ class CustomFileManager: ObservableObject {
         var result = [CustomFile]()
         
         for aLine in lines {
-            let regexResult = aLine.groups(for: REGEX_QUERY)
+            let regexResult = aLine.groups(for: Constants.REGEX_QUERY)
             if regexResult.count > 0 && regexResult[0].count > 0{
                 let group = regexResult[0]
                 let addedTime = group[1]
@@ -101,8 +98,9 @@ class CustomFileManager: ObservableObject {
     // MARK: - PUBLIC
     func getRecent() {
         if timer == nil {
+            self.queryTerminal()
             self.timer = Timer()
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.timer = Timer.scheduledTimer(withTimeInterval: Double(Constants.QUERY_SECONDS), repeats: true, block: { _ in
                 self.queryTerminal()
             })
         }
@@ -132,116 +130,27 @@ class CustomFileManager: ObservableObject {
 //        let regexResult = result.groups(for: regexQuery)
 //        debugPrint(regexResult)
 //        return
-        
-        let cm =
-        """
-        mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | \
-        xargs  -I abc echo abc  | \
-        xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | \
-        sed 'N;s/\n/ /' | \
-        sort
-        """
-        
-        let cm2 = #"mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs  -I abc echo abc  | xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | sed 'N;s/\n/ /' | sort"#
-        
-        let command = cm2
-        let subResult = command.runAsCommand()
-        var topResult = Array(self.getResultFromRaw(subResult))
-//        topResult = self.filterAllowFileType(files: topResult)
-        
-        topResult = topResult.count > self.MAX_RESULTS ? Array(topResult[0...9]) : topResult
-        print("From query:")
-        print(topResult)
-        
-        return
-        
-        print("Command: ")
-        print(command)
-        let task = Process()
-        updateString(command + "\n")
+        DispatchQueue.global(qos: .userInitiated).async {
+            print("This is run on a background queue")
+            let cm2 = #"mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs  -I abc echo abc  | xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | sed 'N;s/\n/ /' | sort"#
+            
+            let command = cm2
+            let subResult = command.runAsCommand()
+            var topResult = Array(self.getResultFromRaw(subResult).reversed())
+    //        topResult = self.filterAllowFileType(files: topResult)
+            
+            topResult = topResult.count > Constants.FILES_TO_SHOWN ? Array(topResult[0...Constants.FILES_TO_SHOWN]) : topResult
+            print("From query:")
+            print(topResult)
 
-
-        task.launchPath = "/bin/sh"
-        task.arguments = ["-c", command]
-//        task.arguments = ["-c", "echo 1 ; sleep 1 ; echo 2 ; sleep 1 ; echo 3 ; sleep 1 ; echo 4"]
-
-        let myPipe = Pipe()
-        task.standardOutput = myPipe
-        let outHandle = myPipe.fileHandleForReading
-        
-//        let errPipe = Pipe()
-//        task.standardError = errPipe
-//        let errHandle = errPipe.fileHandleForReading
-        
-        outHandle.readabilityHandler = { pipe in
-            if let line = String(data: pipe.availableData, encoding: String.Encoding(rawValue: NSUTF8StringEncoding) ) {
-                if pipe.availableData.isEmpty  {
-                    print("EOF stdout: This command is done!")
-                    myPipe.fileHandleForReading.readabilityHandler = nil
-                    DispatchQueue.main.async {
-//                        self.isBrewDone = true
-                    }
-//                    self.runInitScript()
-                }
-                else {
-                    if line != "" && line.count > 0 {
-//                        print("New output stdout: \(line)")
-                        if (line.contains("Query update:")) {
-                            self.updateString(line)
-                            let subCommand = "mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today(-3) OR kMDItemFSCreationDate >= $time.today(-3)'"
-                            let subResult = subCommand.runAsCommand()
-                            var topResult = Array(self.getResultFromRaw(subResult).reversed())
-//                            topResult = self.filterAllowFileType(files: topResult)
-                            topResult = topResult.count > self.MAX_RESULTS ? Array(topResult[0...9]) : topResult
-                            print("From query update:")
-                            print(topResult)
-                        }
-                        else {
-                            self.updateString(line)
-                            var topResult = Array(self.getResultFromRaw(line).reversed())
-//                            topResult = self.filterAllowFileType(files: topResult)
-                            topResult = topResult.count > self.MAX_RESULTS ? Array(topResult[0...9]) : topResult
-                            print("Normal:")
-                            print(topResult)
-                            
-                        }
-//
-                    }
-                }
-
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+                self.updateFileList(fileList: topResult)
             }
         }
-//        errHandle.readabilityHandler = { pipe in
-//            if let line = String(data: pipe.availableData, encoding: String.Encoding(rawValue: NSUTF8StringEncoding) ) {
-//                if pipe.availableData.isEmpty  {
-//                    print("EOF stderr: This command is done!")
-//                    myPipe.fileHandleForReading.readabilityHandler = nil
-//                    DispatchQueue.main.async {
-////                        self.isBrewDone = true
-//                    }
-////                    self.runInitScript()
-//                }
-//                else {
-//                    if line != "" && line.count > 0 {
-//                        print("New output stderr: \(line)")
-//                        if (line.contains("Query update:")) {
-//                            self.updateString(line)
-//                            let subCommand = "mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today(-1)'"
-//                            let subResult = subCommand.runAsCommand()
-//                            print(subResult)
-//                        }
-//                        else {
-//                            self.updateString(line)
-//                        }
-////
-//                    }
-//                }
-//
-//            }
-//        }
-
-        task.launch()
-        task.waitUntilExit()
+        
+       
+        return
     }
     
 }

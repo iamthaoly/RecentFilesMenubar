@@ -13,7 +13,7 @@ struct CustomFile: Identifiable {
     var filePath: String = ""
     var thumbnail: String = ""
     var dateAddedOrCreated: Date?
-    
+    var fileSize: UInt64?
     var url: URL
     
     init(filePath: String) {
@@ -27,6 +27,12 @@ struct CustomFile: Identifiable {
         self.filePath = fileName
         self.url = URL.init(fileURLWithPath: filePath)
         self.dateAddedOrCreated = strDate.toDate()
+    }
+    
+    func getTime() -> String {
+        guard let date = dateAddedOrCreated else { return ""}
+        
+        return "\(Calendar.current.component(.hour, from: date)):\(Calendar.current.component(.minute, from: date))"
     }
     
 }
