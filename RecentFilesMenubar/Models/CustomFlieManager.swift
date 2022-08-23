@@ -15,7 +15,7 @@ class CustomFileManager: ObservableObject {
     @Published var recentFileList: [CustomFile] = []
     @Published var terminalString = ""
     let MILLISECOND_TO_RELOAD = 0.5
-    let MAX_RESULTS = 10
+    let MAX_RESULTS = 20
     
     var timer: Timer?
     let REGEX_QUERY = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
@@ -54,7 +54,7 @@ class CustomFileManager: ObservableObject {
             if regexResult.count > 0 && regexResult[0].count > 0{
                 let group = regexResult[0]
                 let addedTime = group[1]
-                let fileName = group[2]
+                let fileName = group[2].replacingOccurrences(of: "\"", with: "")
                 if isFileTypeAllow(fileName: fileName) {
                     let newFile = CustomFile(fileName: fileName, strDate: addedTime)
                     result.append(newFile)
@@ -117,11 +117,6 @@ class CustomFileManager: ObservableObject {
         // mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today(-3) && kMDItemFSName = "*.png"' | head -4
         
         terminalString = ""
-//        let url = URL(fileURLWithPath: "brew_script.sh", relativeTo: Bundle.main.resourceURL)
-//        let command = "mdfind -live -onlyin ~ 'kMDItemDateAdded >= $time.today(-1)'"
-        // mdls -name kMDItemFSName -name kMDItemDateAdded -raw **/* | xargs -0 -I {} echo {} | sed 'N;s/\n/ /' | sort
-        // mdls -name kMDItemFSName -name kMDItemDateAdded -raw /Users/ly/* | xargs -0 -I {} echo {} | sed 'N;s/\n/ /' | sort
-        // mdls -name kMDItemFSName -name kMDItemDateAdded -raw .*/* | xargs -0 -I {} echo {} | sed 'N;s/\n/ /' | sort
         
         // mdfind -onlyin ~/Desktop 'kMDItemDateAdded >= $time.today(-3)' | \
 //        xargs  -I abc echo abc  | \
@@ -137,7 +132,8 @@ class CustomFileManager: ObservableObject {
 //        debugPrint(regexResult)
 //        return
         
-        let cm = """
+        let cm =
+        """
         mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | \
         xargs  -I abc echo abc  | \
         xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | \
@@ -145,22 +141,9 @@ class CustomFileManager: ObservableObject {
         sort
         """
         
-        // How to echo the path???
-        let cm2 = """
-        mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | \
-        xargs -I abc echo abc  | \
-        xargs -I {} echo  "\"{}\"" | \
-        xargs -I _v sh -c "mdls -name kMDItemFSName -name kMDItemDateAdded _v; echo "${_v}""
-
+        let cm2 = #"mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs  -I abc echo abc  | xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | sed 'N;s/\n/ /' | sort"#
         
-        xargs mdls -name kMDItemFSName -name kMDItemDateAdded | \
-        xargs -I _v sh -c "echo _v; mdls _v"
-        
-        sed 'N;s/\n/ /' | \
-        sort
-        """
-        
-        let command = cm
+        let command = cm2
         let subResult = command.runAsCommand()
         var topResult = Array(self.getResultFromRaw(subResult))
 //        topResult = self.filterAllowFileType(files: topResult)
@@ -285,7 +268,18 @@ extension String {
 //    func getDateFromString(_ string: String) -> Date{
 //
 //    }
-    
+    // NOT WORKING :(
+//    var unescaped: String {
+//        let entities = ["\0", "\t", "\n", "\r", "\"", "\'", "\\"]
+//        var current = self
+//        for entity in entities {
+//            let descriptionCharacters = entity.debugDescription.dropFirst().dropLast()
+//            let description = String(descriptionCharacters)
+//            current = current.replacingOccurrences(of: description, with: entity)
+//        }
+//        return current
+//    }
+//
     func groups(for regexPattern: String) -> [[String]] {
         do {
             let text = self

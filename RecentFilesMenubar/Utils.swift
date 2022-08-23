@@ -290,6 +290,10 @@ class Utils {
             "scss",
             "wasm",
             "php"
+        ],
+        "others": [
+            "json",
+            "plist"
         ]
     ]
 }
