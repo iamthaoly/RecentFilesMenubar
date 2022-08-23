@@ -58,6 +58,7 @@ class CustomFileManager: ObservableObject {
                 if isFileTypeAllow(fileName: fileName) {
                     let newFile = CustomFile(fileName: fileName, strDate: addedTime)
                     result.append(newFile)
+//                    print(newFile.dateAddedOrCreated)
                 }
             }
             else {
@@ -265,9 +266,22 @@ extension String {
 }
 
 extension String {
-//    func getDateFromString(_ string: String) -> Date{
-//
-//    }
+    // current: 2022-08-23 04:59:15
+    func toDate(withFormat format: String = "yyyy-MM-dd HH:mm:ss") -> Date?{
+
+        let dateFormatter = DateFormatter()
+//        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tehran")
+//        dateFormatter.locale = Locale(identifier: "fa-IR")
+//        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+00:00")//Add this
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let date = dateFormatter.date(from: self)
+
+        return date
+
+    }
+    
     // NOT WORKING :(
 //    var unescaped: String {
 //        let entities = ["\0", "\t", "\n", "\r", "\"", "\'", "\\"]

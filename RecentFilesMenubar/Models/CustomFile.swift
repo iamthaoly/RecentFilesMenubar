@@ -26,7 +26,7 @@ struct CustomFile: Identifiable {
         self.fileName = fileName
         self.filePath = fileName
         self.url = URL.init(fileURLWithPath: filePath)
-        self.dateAddedOrCreated = Date()
+        self.dateAddedOrCreated = strDate.toDate()
     }
     
 }
