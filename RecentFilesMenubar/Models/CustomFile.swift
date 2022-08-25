@@ -21,10 +21,11 @@ struct CustomFile: Identifiable {
     }
     var url: URL
     
-    init(filePath: String) {
+    init(filePath: String, strDate: String) {
         self.filePath = filePath
         self.url = URL.init(fileURLWithPath: filePath)
         self.fileName = url.lastPathComponent
+        self.dateAddedOrCreated = strDate.toDate()
     }
     
     init(fileName: String, strDate: String) {
@@ -32,6 +33,10 @@ struct CustomFile: Identifiable {
         self.filePath = fileName
         self.url = URL.init(fileURLWithPath: filePath)
         self.dateAddedOrCreated = strDate.toDate()
+    }
+    
+    func getFileSize() {
+        
     }
     
     func getTime() -> String {

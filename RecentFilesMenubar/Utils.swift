@@ -34,5 +34,7 @@ class Utils {
         }
     }
     
-    
+    static func getFileSize() -> UInt8 {
+        return 0
+    }
 }
