@@ -16,15 +16,16 @@ class CustomFileManager: ObservableObject {
     @Published var terminalString = ""
     
     var timer: Timer?
-
+    private var isQuerying: Bool = false
+    
     // MARK: - PRIVATE
     private init() {
-//        fakeData()
+        //        fakeData()
     }
     
     private func fakeData() {
-//        recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/monterey overview.png"))
-//        recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/applescript timelapse result.png"))
+        recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/monterey overview.png", strDate: "123"))
+        recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/applescript timelapse result.png", strDate: "123"))
     }
     
     private func updateFileList(fileList: [CustomFile]) {
@@ -111,13 +112,17 @@ class CustomFileManager: ObservableObject {
         
         terminalString = ""
         
-//        let regexQuery = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
-//        
-//        let result = "kMDItemDateAdded = 2022-08-22 21:35:15 +0000 kMDItemFSName    = \"Intervals_7D1880EB-C352-5415-A254-5E9A2AD13225.plist\""
-//
-//        let regexResult = result.groups(for: regexQuery)
-//        debugPrint(regexResult)
-//        return
+        //        let regexQuery = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
+        //
+        //        let result = "kMDItemDateAdded = 2022-08-22 21:35:15 +0000 kMDItemFSName    = \"Intervals_7D1880EB-C352-5415-A254-5E9A2AD13225.plist\""
+        //
+        //        let regexResult = result.groups(for: regexQuery)
+        //        debugPrint(regexResult)
+        //        return
+        if isQuerying == true {
+            return
+        }
+        isQuerying = true
         DispatchQueue.global(qos: .userInitiated).async {
             print("This is run on a background queue")
             
@@ -128,14 +133,15 @@ class CustomFileManager: ObservableObject {
             topResult = topResult.count > Constants.FILES_TO_SHOWN ? Array(topResult[0...Constants.FILES_TO_SHOWN]) : topResult
             print("From query:")
             print(topResult)
-
+            
             DispatchQueue.main.async {
                 print("This is run on the main queue, after the previous code in outer block")
                 self.updateFileList(fileList: topResult)
+                self.isQuerying = false
+                
             }
         }
-       
-        return
+        
     }
     
 }

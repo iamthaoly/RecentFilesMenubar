@@ -22,11 +22,12 @@ struct FileListView: View {
                 .font(.system(size: 16))
                 .foregroundColor(.white)
                 .padding(.leading, 6)
+            if manager.recentFileList.count == 0 {
+                Text("Loading...")
+                    .foregroundColor(.white)
+                    .padding(.leading, 6)
+            }
             VStack() {
-                if manager.recentFileList.count == 0 {
-                    Text("Add or create a file to view it here.")
-                }
-
                 ScrollView {
                     ForEach(manager.recentFileList) { fileItem in
                         FileItem(isSelected: .constant(currentHoverId == fileItem.id), item: fileItem)
@@ -47,9 +48,9 @@ struct FileListView: View {
 //                    }
 //                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 1 ? onHoverColor: Color.clear))
 //                    .clipped()
-                Button("TEST") {
-                    manager.getRecent()
-                }
+//                Button("TEST") {
+//                    manager.getRecent()
+//                }
             }
 
         }
@@ -86,6 +87,33 @@ struct FileItem: View {
                     RoundedRectangle(cornerRadius: 5)
                         .fill(Color.black)
                         .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                    Image(Utils.generateThumbnail(url: item.url), scale: NSScreen.main?.backingScaleFactor ?? 1, label: Text(""))
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                    if thumb != nil {
+//                        Image(thumb!, scale: NSScreen.main!.backingScaleFactor, label: Text(""))
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                    }
+//                    else {
+//                        RoundedRectangle(cornerRadius: 5)
+//                            .fill(Color.black)
+//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                    }
+//                    else {
+//                        RoundedRectangle(cornerRadius: 5)
+//                            .fill(Color.black)
+//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                            .onAppear()
+////                        Image(systemName: "photo") //
+////                            .onAppear(perform: getThumb)
+////                            .resizable()
+////                            .aspectRatio(contentMode: .fit)
+////                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+//                    }
+//
                     
                     VStack(alignment: .leading, spacing: 6.0) {
                         Text(item.fileName)
