@@ -23,13 +23,18 @@ struct FileListView: View {
                 .foregroundColor(.white)
                 .padding(.leading, 6)
             VStack() {
-                ForEach(manager.recentFileList) { fileItem in
-                    FileItem(isSelected: .constant(currentHoverId == fileItem.id), item: fileItem)
-                        .onHover { hover in
-                            currentHoverId = fileItem.id
-                        }
+                if manager.recentFileList.count == 0 {
+                    Text("Add or create a file to view it here.")
                 }
-                
+
+                ScrollView {
+                    ForEach(manager.recentFileList) { fileItem in
+                        FileItem(isSelected: .constant(currentHoverId == fileItem.id), item: fileItem)
+                            .onHover { hover in
+                                currentHoverId = fileItem.id
+                            }
+                    }
+                }
 //                FileItem(isSelected: .constant(currentHoverIndex == 0))
 //                    .onHover { hover in
 //                        currentHoverIndex = 0
@@ -42,9 +47,9 @@ struct FileListView: View {
 //                    }
 //                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 1 ? onHoverColor: Color.clear))
 //                    .clipped()
-                Button("TEST") {
-                    manager.queryTerminal()
-                }
+//                Button("TEST") {
+//                    manager.getRecent()
+//                }
             }
 
         }
@@ -97,8 +102,8 @@ struct FileItem: View {
                     }
                     .frame(width: geo.size.width / totalColumn * column[1], alignment: .leading)
                     VStack {
-                        Text("7:24")
-                                    }
+                        Text(item.getTime())
+                    }
                     .frame(maxWidth: geo.size.width / totalColumn * column[2], alignment: .top)
                 }
                 .frame(maxHeight: .infinity)

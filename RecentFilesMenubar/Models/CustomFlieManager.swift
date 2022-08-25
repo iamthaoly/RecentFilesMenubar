@@ -43,7 +43,7 @@ class CustomFileManager: ObservableObject {
         let lines = text.split(whereSeparator: \.isNewline).map(String.init)
 //        kMDItemDateAdded = 2022-08-22 08:09:36 +0000 kMDItemFSName    = "com.apple.TextEdit.plist"
         
-//        let result = "kMDItemDateAdded = 2022-08-22 21:35:15 +0000 kMDItemFSName    = \"Intervals_7D1880EB-C352-5415-A254-5E9A2AD13225.plist\""
+//        let result = "kMDItemDateAdded = 2022-08-22 21:35:15 +0000 kMDItemFSName    = \"Intervals_7D1880EB-C352-5415-A254-5E9A2AD13225.plist\"  kMDItemPhysicalSize = 4096"
         var result = [CustomFile]()
         
         for aLine in lines {
@@ -52,8 +52,10 @@ class CustomFileManager: ObservableObject {
                 let group = regexResult[0]
                 let addedTime = group[1]
                 let fileName = group[2].replacingOccurrences(of: "\"", with: "")
+//                let fileSize = group[3].contains("null") ? "0" : group[3]
                 if isFileTypeAllow(fileName: fileName) {
-                    let newFile = CustomFile(fileName: fileName, strDate: addedTime)
+                    var newFile = CustomFile(fileName: fileName, strDate: addedTime)
+//                    newFile.fileSize = UInt64(fileSize)
                     result.append(newFile)
 //                    print(newFile.dateAddedOrCreated)
                 }
@@ -69,7 +71,7 @@ class CustomFileManager: ObservableObject {
     private func isFileTypeAllow(fileName: String) -> Bool {
         let url = URL.init(fileURLWithPath: fileName)
         let fileExtension = url.pathExtension.lowercased()
-        for extensionType in Utils.extensions {
+        for extensionType in Constants.extensions {
             if extensionType.value.contains(fileExtension) {
                 return true
             }
@@ -84,7 +86,7 @@ class CustomFileManager: ObservableObject {
         for fileItem in files {
             let url = URL.init(fileURLWithPath: fileItem)
             let fileExtension = url.pathExtension.lowercased()
-            for extensionType in Utils.extensions {
+            for extensionType in Constants.extensions {
                 if extensionType.value.contains(fileExtension) {
                     result.append(fileItem)
                     break
@@ -97,7 +99,9 @@ class CustomFileManager: ObservableObject {
     
     // MARK: - PUBLIC
     func getRecent() {
+        
         if timer == nil {
+            print("Timer is not running. Turning on...")
             self.queryTerminal()
             self.timer = Timer()
             self.timer = Timer.scheduledTimer(withTimeInterval: Double(Constants.QUERY_SECONDS), repeats: true, block: { _ in
@@ -105,7 +109,7 @@ class CustomFileManager: ObservableObject {
             })
         }
         else {
-//            print("Timer is already running!")
+            print("Timer is running. Turning off...")
             timer!.invalidate()
             timer = nil
         }
@@ -133,8 +137,9 @@ class CustomFileManager: ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async {
             print("This is run on a background queue")
             let cm2 = #"mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs  -I abc echo abc  | xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | sed 'N;s/\n/ /' | sort"#
+//            N;s/\n/ /
             
-            let command = cm2
+            let command = Constants.TERMINAL_COMMAND
             let subResult = command.runAsCommand()
             var topResult = Array(self.getResultFromRaw(subResult).reversed())
     //        topResult = self.filterAllowFileType(files: topResult)

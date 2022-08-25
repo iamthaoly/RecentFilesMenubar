@@ -14,6 +14,11 @@ struct CustomFile: Identifiable {
     var thumbnail: String = ""
     var dateAddedOrCreated: Date?
     var fileSize: UInt64?
+    var readableFileSize: String {
+        get {
+            return Utils.convertToFileString(with: fileSize ?? 0)
+        }
+    }
     var url: URL
     
     init(filePath: String) {

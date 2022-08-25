@@ -7,17 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080F5FDA28B4B7A200A378BB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080F5FD928B4B7A200A378BB /* Constants.swift */; };
 		081D94D52891306200D75A09 /* RecentFilesMenubarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081D94D42891306200D75A09 /* RecentFilesMenubarApp.swift */; };
 		081D94D72891306200D75A09 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081D94D62891306200D75A09 /* FileListView.swift */; };
 		081D94D92891306400D75A09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081D94D82891306400D75A09 /* Assets.xcassets */; };
 		081D94DC2891306400D75A09 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081D94DB2891306400D75A09 /* Preview Assets.xcassets */; };
 		0821E6BD2896B00400530124 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0821E6BC2896B00400530124 /* HomeScreen.swift */; };
+		0847FCB228B4CBFA008A2844 /* AppDelegate3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0847FCB128B4CBFA008A2844 /* AppDelegate3.swift */; };
 		08A00B8828AC6F170057AD92 /* CustomFlieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */; };
 		08A00B8A28AC6FC10057AD92 /* CustomFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A00B8928AC6FC10057AD92 /* CustomFile.swift */; };
 		08B09E3E28AE375800006A6D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B09E3D28AE375800006A6D /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		080F5FD928B4B7A200A378BB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		081D94D12891306200D75A09 /* RecentFilesMenubar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecentFilesMenubar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		081D94D42891306200D75A09 /* RecentFilesMenubarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentFilesMenubarApp.swift; sourceTree = "<group>"; };
 		081D94D62891306200D75A09 /* FileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListView.swift; sourceTree = "<group>"; };
@@ -25,6 +28,8 @@
 		081D94DB2891306400D75A09 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		081D94DD2891306400D75A09 /* RecentFilesMenubar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecentFilesMenubar.entitlements; sourceTree = "<group>"; };
 		0821E6BC2896B00400530124 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		0847FCB128B4CBFA008A2844 /* AppDelegate3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate3.swift; sourceTree = "<group>"; };
+		0869854928B70E8500CF8AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlieManager.swift; sourceTree = "<group>"; };
 		08A00B8928AC6FC10057AD92 /* CustomFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFile.swift; sourceTree = "<group>"; };
 		08B09E3D28AE375800006A6D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -60,6 +65,7 @@
 		081D94D32891306200D75A09 /* RecentFilesMenubar */ = {
 			isa = PBXGroup;
 			children = (
+				0869854928B70E8500CF8AAF /* Info.plist */,
 				0821E6BF2896B08E00530124 /* Views */,
 				0821E6BE2896B02E00530124 /* Screens */,
 				081D94D82891306400D75A09 /* Assets.xcassets */,
@@ -68,6 +74,8 @@
 				081D94DA2891306400D75A09 /* Preview Content */,
 				083BDBAD28AF6B1B00FCF3F1 /* Models */,
 				08B09E3D28AE375800006A6D /* Utils.swift */,
+				080F5FD928B4B7A200A378BB /* Constants.swift */,
+				0847FCB128B4CBFA008A2844 /* AppDelegate3.swift */,
 			);
 			path = RecentFilesMenubar;
 			sourceTree = "<group>";
@@ -175,10 +183,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0847FCB228B4CBFA008A2844 /* AppDelegate3.swift in Sources */,
 				08A00B8A28AC6FC10057AD92 /* CustomFile.swift in Sources */,
 				08A00B8828AC6F170057AD92 /* CustomFlieManager.swift in Sources */,
 				081D94D72891306200D75A09 /* FileListView.swift in Sources */,
 				081D94D52891306200D75A09 /* RecentFilesMenubarApp.swift in Sources */,
+				080F5FDA28B4B7A200A378BB /* Constants.swift in Sources */,
 				0821E6BD2896B00400530124 /* HomeScreen.swift in Sources */,
 				08B09E3E28AE375800006A6D /* Utils.swift in Sources */,
 			);
@@ -314,6 +324,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecentFilesMenubar/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -341,6 +352,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecentFilesMenubar/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
