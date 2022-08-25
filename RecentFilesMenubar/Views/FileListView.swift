@@ -47,9 +47,9 @@ struct FileListView: View {
 //                    }
 //                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 1 ? onHoverColor: Color.clear))
 //                    .clipped()
-//                Button("TEST") {
-//                    manager.getRecent()
-//                }
+                Button("TEST") {
+                    manager.getRecent()
+                }
             }
 
         }
