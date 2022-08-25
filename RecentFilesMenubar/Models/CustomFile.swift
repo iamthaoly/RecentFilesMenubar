@@ -19,6 +19,15 @@ struct CustomFile: Identifiable {
             return Utils.convertToFileString(with: fileSize ?? 0)
         }
     }
+    var parentFolder: String {
+        get {
+            let aboveDir = url.deletingLastPathComponent().path
+            let folders = aboveDir.split(separator: "/")
+            let parent = "\(folders.last ?? "")"
+            return parent
+        }
+    }
+    
     var url: URL
     
     init(filePath: String, strDate: String) {
@@ -26,18 +35,17 @@ struct CustomFile: Identifiable {
         self.url = URL.init(fileURLWithPath: filePath)
         self.fileName = url.lastPathComponent
         self.dateAddedOrCreated = strDate.toDate()
+        self.fileSize = Utils.sizeForLocalFilePath(filePath: filePath)
+
     }
     
-    init(fileName: String, strDate: String) {
-        self.fileName = fileName
-        self.filePath = fileName
-        self.url = URL.init(fileURLWithPath: filePath)
-        self.dateAddedOrCreated = strDate.toDate()
-    }
+//    init(fileName: String, strDate: String) {
+//        self.fileName = fileName
+//        self.filePath = fileName
+//        self.url = URL.init(fileURLWithPath: filePath)
+//        self.dateAddedOrCreated = strDate.toDate()
+//    }
     
-    func getFileSize() {
-        
-    }
     
     func getTime() -> String {
         guard let date = dateAddedOrCreated else { return ""}

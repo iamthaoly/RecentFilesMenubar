@@ -94,9 +94,9 @@ struct FileItem: View {
                         HStack(alignment: .center) {
                             Image(systemName: "folder.fill")
                                 .font(.system(size: 16))
-                            Text("Folder")
+                            Text(item.parentFolder)
                         }
-                        Text("1.6 MB")
+                        Text(item.readableFileSize)
                             .font(.system(size: 13))
 
                     }
