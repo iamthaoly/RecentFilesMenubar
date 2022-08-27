@@ -108,6 +108,17 @@ class CustomFileManager: ObservableObject {
         return result
     }
     
+    private func isSameList(list: [CustomFile]) -> Bool {
+        if list.count != recentFileList.count {
+            return false
+        }
+        for i in 0..<list.count {
+            if list[i].filePath != recentFileList[i].filePath {
+                return false
+            }
+        }
+        return true
+    }
     // MARK: - PUBLIC
     func getRecent() {
         
@@ -152,9 +163,12 @@ class CustomFileManager: ObservableObject {
             print("From query:")
             print(topResult)
             
+            
             DispatchQueue.main.async {
                 print("This is run on the main queue, after the previous code in outer block")
-                self.updateFileList(fileList: topResult)
+                if self.isSameList(list: topResult) {
+                    self.updateFileList(fileList: topResult)
+                }
                 self.isQuerying = false
                 
             }
