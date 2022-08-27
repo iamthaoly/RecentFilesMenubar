@@ -17,14 +17,7 @@ class Constants {
     
     static let REGEX_QUERY = #"kMDItemDateAdded = (.+)\s\+.+path = (.+)"#
     
-//    static let REGEX_QUERY = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
-    
     static let TERMINAL_COMMAND  = #"mdfind -onlyin $HOME 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs -I abc echo "abc" | xargs -I {} sh -c 'mdls -name kMDItemDateAdded "{}"; echo "path = {}" ' | sed 'N;s/\n/ /' | sort"#
-    
-//    static let TERMINAL_COMMAND = #"mdfind -onlyin ~ 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs  -I abc echo abc  | xargs -I {} mdls -name kMDItemFSName -name kMDItemDateAdded {} | sed 'N;s/\n/ /' | sort"#
-    
-//    let a = #"mdfind -onlyin ~/Desktop 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs -t -0 -I abc echo 'abc' | xargs  -I {} sh -c 'mdls -name kMDItemDateAdded "{}"; echo "path = {}" ' | sed 'N;s/\n/ /' | sort"#
-    
     
     static let extensions = [
         "archive": [

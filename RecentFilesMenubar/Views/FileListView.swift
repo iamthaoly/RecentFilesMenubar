@@ -36,22 +36,17 @@ struct FileListView: View {
                             }
                     }
                 }
-//                FileItem(isSelected: .constant(currentHoverIndex == 0))
-//                    .onHover { hover in
-//                        currentHoverIndex = 0
-//                    }
-//                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 0 ? onHoverColor: Color.clear))
-//                    .clipped()
-//                FileItem(isSelected: .constant(currentHoverIndex == 1))
-//                    .onHover { hover in
-//                        currentHoverIndex = 1
-//                    }
-//                    .background(RoundedRectangle(cornerRadius: 10).fill(currentHoverIndex == 1 ? onHoverColor: Color.clear))
-//                    .clipped()
-//                Button("TEST") {
-//                    manager.getRecent()
-//                }
             }
+            VStack() {
+                Button(action: {
+                    NSApplication.shared.terminate(nil)
+                }) {
+                    Text("Quit")
+                }
+                .frame(alignment: .trailing)
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            
 
         }
         .frame(maxWidth: 350)

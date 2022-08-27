@@ -26,6 +26,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
         // The length can be changed
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        
+        CustomFileManager.shared.getRecent()
         if let statusButton = statusItem.button {
             statusButton.image = NSImage(
               systemSymbolName: "hammer",

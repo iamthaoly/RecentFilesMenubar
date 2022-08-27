@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import AppKit
 
 struct CustomFile: Identifiable {
     let id = UUID()
     var fileName: String = ""
     var filePath: String = ""
-    var thumbnail: String = ""
     var dateAddedOrCreated: Date?
     var fileSize: UInt64?
+    var thumbnail: CGImage?
     
     var readableFileSize: String {
         get {
@@ -52,6 +53,11 @@ struct CustomFile: Identifiable {
         guard let date = dateAddedOrCreated else { return ""}
         
         return "\(Calendar.current.component(.hour, from: date)):\(Calendar.current.component(.minute, from: date))"
+    }
+    
+    mutating func updateInfo(strDate: String) {
+        self.fileSize = Utils.sizeForLocalFilePath(filePath: filePath)
+        self.dateAddedOrCreated = strDate.toDate()
     }
     
 }

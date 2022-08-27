@@ -30,6 +30,7 @@ class CustomFileManager: ObservableObject {
     
     private func updateFileList(fileList: [CustomFile]) {
         DispatchQueue.main.async {
+            self.recentFileList = []
             self.recentFileList = fileList
         }
     }
@@ -50,9 +51,16 @@ class CustomFileManager: ObservableObject {
                 let group = regexResult[0]
                 let addedTime = group[1]
                 let filePath = group[2]
-                if isFileTypeAllow(filePath: filePath) {
-                    var newFile = CustomFile(filePath: filePath, strDate: addedTime)
-                    result.append(newFile)
+                let added = isThisPathAdded(filePath)
+                if (added >= 0) {
+                    recentFileList[added].updateInfo(strDate: addedTime)
+                    result.append(recentFileList[added])
+                }
+                else {
+                    if isFileTypeAllow(filePath: filePath) {
+                        let newFile = CustomFile(filePath: filePath, strDate: addedTime)
+                        result.append(newFile)
+                    }
                 }
             }
             else {
@@ -61,6 +69,16 @@ class CustomFileManager: ObservableObject {
         }
         
         return result
+    }
+    
+    
+    private func isThisPathAdded(_ path: String) -> Int {
+        for i in 0..<recentFileList.count {
+            if (recentFileList[i].filePath == path) {
+                return i
+            }
+        }
+        return -1
     }
     
     private func isFileTypeAllow(filePath: String) -> Bool {
@@ -101,11 +119,11 @@ class CustomFileManager: ObservableObject {
                 self.queryTerminal()
             })
         }
-        else {
-            print("Timer is running. Turning off...")
-            timer!.invalidate()
-            timer = nil
-        }
+//        else {
+//            print("Timer is running. Turning off...")
+//            timer!.invalidate()
+//            timer = nil
+//        }
     }
     
     func queryTerminal() {
