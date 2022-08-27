@@ -161,13 +161,19 @@ class CustomFileManager: ObservableObject {
             
             topResult = topResult.count > Constants.FILES_TO_SHOWN ? Array(topResult[0...Constants.FILES_TO_SHOWN]) : topResult
             print("From query:")
-            print(topResult)
+            debugPrint("manager: files from query::")
+            debugPrint(topResult)
+//            print(topResult)
             
             
             DispatchQueue.main.async {
                 print("This is run on the main queue, after the previous code in outer block")
-                if self.isSameList(list: topResult) {
+                if self.isSameList(list: topResult) == false{
+                    debugPrint("manager: new files. update view")
                     self.updateFileList(fileList: topResult)
+                }
+                else {
+                    debugPrint("manager: no new files. not update view")
                 }
                 self.isQuerying = false
                 

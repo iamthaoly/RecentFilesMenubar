@@ -9,11 +9,11 @@ import Foundation
 
 class Constants {
     
-    static let QUERY_SECONDS = 5
+    static let QUERY_SECONDS = 2
     static let FILES_TO_SHOWN = 20
     
-    // DANGER!
-    // PLEASE DON'T EDIT THE FIELDS BELOW, IT WILL BREAK THE APP.
+    // MARK: - DANGER!
+    // DON'T EDIT THE FIELDS BELOW, IT WILL BREAK THE APP.
     
     static let REGEX_QUERY = #"kMDItemDateAdded = (.+)\s\+.+path = (.+)"#
     
