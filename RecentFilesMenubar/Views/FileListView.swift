@@ -152,7 +152,7 @@ struct FileItem: View {
 struct ShowInFinder: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(12)
+            .padding(10)
             .background(Color.accentColor)
             .foregroundColor(Color.white.opacity(0.8))
             .cornerRadius(20)

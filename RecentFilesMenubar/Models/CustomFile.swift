@@ -39,18 +39,15 @@ class CustomFile: Identifiable {
         self.fileName = url.lastPathComponent
         self.dateAddedOrCreated = strDate.toDate()
         self.fileSize = Utils.sizeForLocalFilePath(filePath: filePath)
-        getThumb()
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.getThumb()
+        }
         
     }
     
-    //    init(fileName: String, strDate: String) {
-    //        self.fileName = fileName
-    //        self.filePath = fileName
-    //        self.url = URL.init(fileURLWithPath: filePath)
-    //        self.dateAddedOrCreated = strDate.toDate()
-    //    }
-    
     private func getThumb() {
+
         let size: CGSize = CGSize(width: 60, height: 80)
         let scale = NSScreen.main?.backingScaleFactor
         
