@@ -79,36 +79,18 @@ struct FileItem: View {
             GeometryReader { geo in
 //                RoundedRectangle(cornerRadius: 10.0)
                 HStack(alignment: .top) {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(Color.black)
-                        .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                    Image(Utils.generateThumbnail(url: item.url), scale: NSScreen.main?.backingScaleFactor ?? 1, label: Text(""))
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                    if thumb != nil {
-//                        Image(thumb!, scale: NSScreen.main!.backingScaleFactor, label: Text(""))
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                    }
-//                    else {
-//                        RoundedRectangle(cornerRadius: 5)
-//                            .fill(Color.black)
-//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                    }
-//                    else {
-//                        RoundedRectangle(cornerRadius: 5)
-//                            .fill(Color.black)
-//                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                            .onAppear()
-////                        Image(systemName: "photo") //
-////                            .onAppear(perform: getThumb)
-////                            .resizable()
-////                            .aspectRatio(contentMode: .fit)
-////                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
-//                    }
-//
+                    if item.thumbnail != nil {
+                        Image(item.thumbnail!, scale: NSScreen.main!.backingScaleFactor, label: Text(""))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+                    }
+                    else {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(Color.black)
+                            .frame(width: geo.size.width / totalColumn * column[0], height: 80)
+                    }
+
                     
                     VStack(alignment: .leading, spacing: 6.0) {
                         Text(item.fileName)

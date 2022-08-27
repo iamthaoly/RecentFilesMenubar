@@ -7,8 +7,9 @@
 
 import Foundation
 import AppKit
+import QuickLookThumbnailing
 
-struct CustomFile: Identifiable {
+class CustomFile: Identifiable {
     let id = UUID()
     var fileName: String = ""
     var filePath: String = ""
@@ -38,15 +39,42 @@ struct CustomFile: Identifiable {
         self.fileName = url.lastPathComponent
         self.dateAddedOrCreated = strDate.toDate()
         self.fileSize = Utils.sizeForLocalFilePath(filePath: filePath)
-
+        getThumb()
+        
     }
     
-//    init(fileName: String, strDate: String) {
-//        self.fileName = fileName
-//        self.filePath = fileName
-//        self.url = URL.init(fileURLWithPath: filePath)
-//        self.dateAddedOrCreated = strDate.toDate()
-//    }
+    //    init(fileName: String, strDate: String) {
+    //        self.fileName = fileName
+    //        self.filePath = fileName
+    //        self.url = URL.init(fileURLWithPath: filePath)
+    //        self.dateAddedOrCreated = strDate.toDate()
+    //    }
+    
+    private func getThumb() {
+        let size: CGSize = CGSize(width: 60, height: 80)
+        let scale = NSScreen.main?.backingScaleFactor
+        
+        // Create the thumbnail request.
+        let request = QLThumbnailGenerator.Request(fileAt: url,
+                                                   size: size,
+                                                   scale: scale ?? 1,
+                                                   representationTypes: .icon)
+        
+        // Retrieve the singleton instance of the thumbnail generator and generate the thumbnails.
+        let generator = QLThumbnailGenerator.shared
+        generator.generateRepresentations(for: request) { (thumbnail, type, error) in
+            if thumbnail == nil || error != nil {
+                // Handle the error case gracefully.
+                print("Error!")
+                //                    return nil
+            } else {
+                // Display the thumbnail that you created.
+                DispatchQueue.main.async {
+                    self.thumbnail = thumbnail!.cgImage
+                }
+            }
+        }
+    }
     
     
     func getTime() -> String {
@@ -55,7 +83,7 @@ struct CustomFile: Identifiable {
         return "\(Calendar.current.component(.hour, from: date)):\(Calendar.current.component(.minute, from: date))"
     }
     
-    mutating func updateInfo(strDate: String) {
+    func updateInfo(strDate: String) {
         self.fileSize = Utils.sizeForLocalFilePath(filePath: filePath)
         self.dateAddedOrCreated = strDate.toDate()
     }
