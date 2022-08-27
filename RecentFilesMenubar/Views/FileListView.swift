@@ -65,7 +65,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct FileItem: View {
     private let totalColumn: CGFloat = 13.0
-    private let column: [CGFloat] = [4, 7, 2]
+    private let column: [CGFloat] = [3, 7, 3]
     
     let textColor = Color(red: 115, green: 128, blue: 139)
     @Binding var isSelected: Bool
@@ -125,7 +125,7 @@ struct FileItem: View {
                     NSWorkspace.shared.activateFileViewerSelecting([item.url])
                 }
                 .buttonStyle(ShowInFinder())
-                .offset(x: geo.size.width / 3 * 2, y: geo.size.height / 4 * 2)
+                .offset(x: geo.size.width / 3 * 1.9, y: geo.size.height / 4 * 2)
                 .opacity(isSelected ? 1 : 0)
                     
             }
@@ -152,10 +152,10 @@ struct FileItem: View {
 struct ShowInFinder: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(8)
-            .background(Color.blue)
+            .padding(12)
+            .background(Color.accentColor)
             .foregroundColor(Color.white.opacity(0.8))
-            .cornerRadius(14)
+            .cornerRadius(20)
         
     }
 }

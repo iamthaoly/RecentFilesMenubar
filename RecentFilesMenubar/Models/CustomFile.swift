@@ -79,8 +79,9 @@ class CustomFile: Identifiable {
     
     func getTime() -> String {
         guard let date = dateAddedOrCreated else { return ""}
-        
-        return "\(Calendar.current.component(.hour, from: date)):\(Calendar.current.component(.minute, from: date))"
+        let hour = Calendar.current.component(.hour, from: date)
+        let minute = Calendar.current.component(.minute, from: date)
+        return String(format: "%02d:%02d", hour, minute)
     }
     
     func updateInfo(strDate: String) {
