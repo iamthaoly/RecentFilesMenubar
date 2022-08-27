@@ -45,6 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
                 print("Show status bar?")
                 CustomFileManager.shared.getRecent()
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+                popover.contentViewController?.view.window?.becomeKey()
             }
         }
     }
