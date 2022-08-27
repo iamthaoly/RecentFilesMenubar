@@ -13,8 +13,6 @@ class CustomFileManager: ObservableObject {
     static var shared = CustomFileManager.init()
     
     @Published var recentFileList: [CustomFile] = []
-    @Published var terminalString = ""
-    
     var timer: Timer?
     private var isQuerying: Bool = false
     
@@ -32,12 +30,6 @@ class CustomFileManager: ObservableObject {
         DispatchQueue.main.async {
             self.recentFileList = []
             self.recentFileList = fileList
-        }
-    }
-    
-    private func updateString(_ string: String) {
-        DispatchQueue.main.async {
-            self.terminalString += string
         }
     }
     
@@ -139,7 +131,6 @@ class CustomFileManager: ObservableObject {
     
     func queryTerminal() {
         
-        terminalString = ""
         
         //        let regexQuery = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
         //
