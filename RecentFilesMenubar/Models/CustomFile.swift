@@ -10,6 +10,9 @@ import AppKit
 import QuickLookThumbnailing
 
 class CustomFile: Identifiable {
+    
+    // MARK: - VARIABLES
+    
     let id = UUID()
     var fileName: String = ""
     var filePath: String = ""
@@ -33,6 +36,8 @@ class CustomFile: Identifiable {
     
     var url: URL
     
+    // MARK: - INIT
+    
     init(filePath: String, strDate: String) {
         self.filePath = filePath
         self.url = URL.init(fileURLWithPath: filePath)
@@ -45,6 +50,8 @@ class CustomFile: Identifiable {
         }
         
     }
+    
+    // MARK: - PRIVATE
     
     private func getThumb() {
 
@@ -73,6 +80,7 @@ class CustomFile: Identifiable {
         }
     }
     
+    // MARK: - PUBLIC
     
     func getTime() -> String {
         guard let date = dateAddedOrCreated else { return ""}

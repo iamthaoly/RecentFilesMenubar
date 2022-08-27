@@ -11,34 +11,6 @@ import AppKit
 
 class Utils {
     
-//    static func generateThumbnail(url: URL, thumb: (CGImage?) -> ()) {
-//        
-//        let size: CGSize = CGSize(width: 60, height: 90)
-//        let scale = NSScreen.main?.backingScaleFactor
-//        
-//        // Create the thumbnail request.
-//        let request = QLThumbnailGenerator.Request(fileAt: url,
-//                                                   size: size,
-//                                                   scale: scale ?? 1,
-//                                                   representationTypes: .all)
-//        
-//        // Retrieve the singleton instance of the thumbnail generator and generate the thumbnails.
-//        var thumbnailResult: CGImage? = nil
-//        let generator = QLThumbnailGenerator.shared
-//        generator.generateRepresentations(for: request) { (thumbnail, type, error) in
-//                if thumbnail == nil || error != nil {
-//                    // Handle the error case gracefully.
-//                    thumb()
-////                    return nil
-//                } else {
-//                    // Display the thumbnail that you created.
-//                    thumb(thumbnail?.cgImage)
-//                }
-//        }
-//        
-////        return thumbnailResult
-//    }
-    
     static func sizeForLocalFilePath(filePath: String) -> UInt64 {
         do {
             let fileAttributes = try FileManager.default.attributesOfItem(atPath: filePath)

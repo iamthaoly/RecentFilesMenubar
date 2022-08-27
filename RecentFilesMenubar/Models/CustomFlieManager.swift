@@ -144,10 +144,6 @@ class CustomFileManager: ObservableObject {
         //        let regexQuery = "kMDItemDateAdded = (.+)\\s\\+.+kMDItemFSName.+(\".+\")"
         //
         //        let result = "kMDItemDateAdded = 2022-08-22 21:35:15 +0000 kMDItemFSName    = \"Intervals_7D1880EB-C352-5415-A254-5E9A2AD13225.plist\""
-        //
-        //        let regexResult = result.groups(for: regexQuery)
-        //        debugPrint(regexResult)
-        //        return
         if isQuerying == true {
             return
         }
