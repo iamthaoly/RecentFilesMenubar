@@ -25,6 +25,7 @@
 		0825B0F028B9C43B00AA1446 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081D94DB2891306400D75A09 /* Preview Assets.xcassets */; };
 		0825B0F128B9C43B00AA1446 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081D94D82891306400D75A09 /* Assets.xcassets */; };
 		0825B0F928B9C70C00AA1446 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0825B0F828B9C70C00AA1446 /* AppDelegate.swift */; };
+		0825B0FA28B9CA7700AA1446 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0825B0F828B9C70C00AA1446 /* AppDelegate.swift */; };
 		08A00B8828AC6F170057AD92 /* CustomFlieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */; };
 		08A00B8A28AC6FC10057AD92 /* CustomFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A00B8928AC6FC10057AD92 /* CustomFile.swift */; };
 		08B09E3E28AE375800006A6D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B09E3D28AE375800006A6D /* Utils.swift */; };
@@ -95,6 +96,7 @@
 				082560C628B729C400FDF142 /* Extensions */,
 				081D94D82891306400D75A09 /* Assets.xcassets */,
 				0869854928B70E8500CF8AAF /* Info.plist */,
+				0825B0F828B9C70C00AA1446 /* AppDelegate.swift */,
 				081D94D42891306200D75A09 /* RecentFilesMenubarApp.swift */,
 				081D94DD2891306400D75A09 /* RecentFilesMenubar.entitlements */,
 				081D94DA2891306400D75A09 /* Preview Content */,
@@ -148,7 +150,6 @@
 			children = (
 				08A00B8728AC6F170057AD92 /* CustomFlieManager.swift */,
 				08A00B8928AC6FC10057AD92 /* CustomFile.swift */,
-				0825B0F828B9C70C00AA1446 /* AppDelegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -269,6 +270,7 @@
 				0825B0E628B9C43B00AA1446 /* String+Extension.swift in Sources */,
 				0825B0E728B9C43B00AA1446 /* CustomFile.swift in Sources */,
 				0825B0E828B9C43B00AA1446 /* CustomFlieManager.swift in Sources */,
+				0825B0FA28B9CA7700AA1446 /* AppDelegate.swift in Sources */,
 				0825B0E928B9C43B00AA1446 /* FileListView.swift in Sources */,
 				0825B0EA28B9C43B00AA1446 /* RecentFilesMenubarApp.swift in Sources */,
 				0825B0EB28B9C43B00AA1446 /* Constants.swift in Sources */,

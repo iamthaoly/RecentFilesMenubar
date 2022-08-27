@@ -16,6 +16,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
         // The length can be changed
+        if let window = NSApplication.shared.windows.first {
+            window.close()
+        }
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         CustomFileManager.shared.getRecent()
