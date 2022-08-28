@@ -44,13 +44,17 @@ class CustomFileManager: ObservableObject {
                 let group = regexResult[0]
                 let addedTime = group[1]
                 let filePath = group[2]
+                
+                // If we can find the file in the list (add index >= 0) -> add item[index] to the current list.
                 let added = isThisPathAdded(filePath)
                 if (added >= 0) {
                     recentFileList[added].updateInfo(strDate: addedTime)
                     result.append(recentFileList[added])
                 }
                 else {
-                    if isFileTypeAllow(filePath: filePath) {
+                    let libraryPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library").path
+                    
+                    if isFileTypeAllow(filePath: filePath) && filePath.hasPrefix(libraryPath) == false {
                         let newFile = CustomFile(filePath: filePath, strDate: addedTime)
                         result.append(newFile)
                     }
