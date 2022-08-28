@@ -15,6 +15,7 @@ struct FileListView: View {
     @StateObject var manager = CustomFileManager.shared
 
     var timer = Timer()
+    @State private var isLoading = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,10 +23,33 @@ struct FileListView: View {
                 .font(.system(size: 16))
                 .foregroundColor(.white)
                 .padding(.leading, 6)
-            if manager.recentFileList.count == 0 {
-                Text("Loading...")
-                    .foregroundColor(.white)
-                    .padding(.leading, 6)
+            if manager.recentFileList.count == 0 || manager.queryNoResult {
+                if manager.queryNoResult {
+                    Text("Create or add some files today to view them here 👀")
+                        .foregroundColor(.white)
+                        .padding(.leading, 6)
+                        .padding(.top, 6)
+                }
+                else if manager.recentFileList.count == 0 {
+                    HStack(alignment: .center, spacing: 12.0) {
+                        Circle()
+                            .trim(from: 0, to: 0.8)
+                            .stroke(Color.blue, lineWidth: 5)
+                            .frame(width: 12, height: 12)
+                            .rotationEffect(Angle(degrees: isLoading ? 360 : 0))
+                            .animation(Animation.default.repeatForever(autoreverses: false), value: isLoading)
+                            .onAppear() {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    isLoading = true
+                                }
+                            }
+                        Text("Loading...")
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.vertical, 6)
+                    }
+                    .padding(.leading, 9)
+                }
             }
             VStack() {
                 ScrollView {

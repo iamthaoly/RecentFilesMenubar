@@ -15,6 +15,7 @@ class CustomFileManager: ObservableObject {
     @Published var recentFileList: [CustomFile] = []
     var timer: Timer?
     private var isQuerying: Bool = false
+    @Published var queryNoResult = false
     
     // MARK: - PRIVATE
     private init() {
@@ -150,10 +151,12 @@ class CustomFileManager: ObservableObject {
             print("From query:")
             debugPrint("manager: files from query::")
             debugPrint(topResult)
+//            topResult = []
 //            print(topResult)
             
             
             DispatchQueue.main.async {
+                self.queryNoResult = (topResult.count == 0)
                 print("This is run on the main queue, after the previous code in outer block")
                 if self.isSameList(list: topResult) == false{
                     debugPrint("manager: new files. update view")
