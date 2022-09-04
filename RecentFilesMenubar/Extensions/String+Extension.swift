@@ -15,6 +15,15 @@ extension String {
         return fileExtension
     }
     
+    func runInsideApplescript(script: String, asAdmin: Bool = false) -> String {
+        let command = "osascript -e 'do shell script \"\(script)\" \(asAdmin ? "with administrator privileges" : "")'"
+        debugPrint("Command run inside applescript:")
+        debugPrint(command)
+        
+        let res = command.runAsCommand()
+        return res
+    }
+    
     func runAsCommand() -> String {
         let pipe = Pipe()
         let task = Process()

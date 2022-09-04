@@ -22,6 +22,10 @@ class CustomFileManager: ObservableObject {
         //        fakeData()
     }
     
+    private func turnOnSpotlightIndexing() {
+        
+    }
+    
     private func fakeData() {
         recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/monterey overview.png", strDate: "123"))
         recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/applescript timelapse result.png", strDate: "123"))
@@ -45,6 +49,9 @@ class CustomFileManager: ObservableObject {
                 let addedTime = group[1]
                 let filePath = group[2]
                 
+                if filePath == "{}" {
+                    continue
+                }
                 // If we can find the file in the list (add index >= 0) -> add item[index] to the current list.
                 let added = isThisPathAdded(filePath)
                 if (added >= 0) {
@@ -53,11 +60,12 @@ class CustomFileManager: ObservableObject {
                 }
                 else {
                     let libraryPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library").path
-                    
-                    if isFileTypeAllow(filePath: filePath) && filePath.hasPrefix(libraryPath) == false {
-                        let newFile = CustomFile(filePath: filePath, strDate: addedTime)
-                        result.append(newFile)
-                    }
+                    let newFile = CustomFile(filePath: filePath, strDate: addedTime)
+                    result.append(newFile)
+//                    if isFileTypeAllow(filePath: filePath) && filePath.hasPrefix(libraryPath) == false {
+//                        let newFile = CustomFile(filePath: filePath, strDate: addedTime)
+//                        result.append(newFile)
+//                    }
                 }
             }
             else {

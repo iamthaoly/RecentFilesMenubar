@@ -9,7 +9,7 @@ import Foundation
 
 class Constants {
     
-    static let QUERY_SECONDS = 2
+    static let QUERY_SECONDS = 1
     static let FILES_TO_SHOWN = 20
     
     // MARK: - DANGER!
@@ -18,6 +18,8 @@ class Constants {
     static let REGEX_QUERY = #"kMDItemDateAdded = (.+)\s\+.+path = (.+)"#
     
     static let TERMINAL_COMMAND  = #"/usr/bin/mdfind -onlyin $HOME 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs -I abc echo "abc" | xargs -I {} sh -c '/usr/bin/mdls -name kMDItemDateAdded "{}"; echo "path = {}" ' | sed 'N;s/\n/ /' | sort"#
+    
+    static let TURN_ON_SPOTLIGHT = "sudo mdutil -i on -a"
     
     static let extensions = [
         "archive": [

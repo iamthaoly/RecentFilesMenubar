@@ -48,7 +48,6 @@ class CustomFile: Identifiable {
         DispatchQueue.global(qos: .userInteractive).async {
             self.getThumb()
         }
-        
     }
     
     // MARK: - PRIVATE
