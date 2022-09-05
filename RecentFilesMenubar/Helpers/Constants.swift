@@ -19,7 +19,9 @@ class Constants {
     
     static let TERMINAL_COMMAND  = #"/usr/bin/mdfind -onlyin $HOME 'kMDItemDateAdded >= $time.today OR kMDItemFSCreationDate >= $time.today' | xargs -I abc echo "abc" | xargs -I {} sh -c '/usr/bin/mdls -name kMDItemDateAdded "{}"; echo "path = {}" ' | sed 'N;s/\n/ /' | sort"#
     
-    static let TURN_ON_SPOTLIGHT = "sudo mdutil -i on -a"
+    static let CHECK_IF_SPOTLIGHT_ENABLED = "mdutil -s /"
+    
+    static let ENABLE_SPOTLIGHT = "sudo mdutil -i on -a"
     
     static let extensions = [
         "archive": [

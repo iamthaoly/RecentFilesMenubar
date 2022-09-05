@@ -20,11 +20,11 @@ class CustomFileManager: ObservableObject {
     // MARK: - PRIVATE
     private init() {
         //        fakeData()
+        if checkSpotlightEnabled() == false{
+            turnOnSpotlightIndexing()
+        }
     }
-    
-    private func turnOnSpotlightIndexing() {
-        
-    }
+
     
     private func fakeData() {
         recentFileList.append(CustomFile(filePath: "/Users/ly/Desktop/monterey overview.png", strDate: "123"))
@@ -125,8 +125,26 @@ class CustomFileManager: ObservableObject {
         return true
     }
     // MARK: - PUBLIC
-    func getRecent() {
+    
+    func checkSpotlightEnabled() -> Bool {
+        let command = Constants.CHECK_IF_SPOTLIGHT_ENABLED
         
+        let res = command.runAsCommand()
+        debugPrint(res)
+        if res.contains("enabled") {
+            return true
+        }
+        return false
+    }
+    
+    func turnOnSpotlightIndexing() {
+        let command = Constants.ENABLE_SPOTLIGHT
+        let res = command.runInsideApplescript(script: command, asAdmin: true)
+        debugPrint(res)
+        
+    }
+    
+    func getRecent() {
         if timer == nil {
             print("Timer is not running. Turning on...")
             self.queryTerminal()
