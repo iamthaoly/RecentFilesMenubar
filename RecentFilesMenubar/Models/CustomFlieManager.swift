@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+import AppKit
+import SwiftUI
 
 class CustomFileManager: ObservableObject {
     
@@ -35,7 +36,16 @@ class CustomFileManager: ObservableObject {
         DispatchQueue.main.async {
             self.recentFileList = []
             self.recentFileList = fileList
+            self.updateToAppDelegate()
         }
+    }
+    
+    private func updateToAppDelegate() {
+        let maxHeight = Constants.MAX_WINDOW_HEIGHT
+        let customHeight: Double = Constants.LIST_ITEM_HEIGHT * Double(self.recentFileList.count) + 200
+        let minHeight =  min(maxHeight, customHeight)
+        
+        AppDelegate.instance.updatePopoverSize(height: minHeight)
     }
     
     private func getResultFromRaw(_ text: String) -> [CustomFile] {
@@ -61,11 +71,15 @@ class CustomFileManager: ObservableObject {
                 else {
                     let libraryPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library").path
                     let newFile = CustomFile(filePath: filePath, strDate: addedTime)
-                    result.append(newFile)
-//                    if isFileTypeAllow(filePath: filePath) && filePath.hasPrefix(libraryPath) == false {
-//                        let newFile = CustomFile(filePath: filePath, strDate: addedTime)
-//                        result.append(newFile)
-//                    }
+                    if Constants.ALLOW_SYSTEM_FILE {
+                        result.append(newFile)
+                    }
+                    else {
+                        if isFileTypeAllow(filePath: filePath) && filePath.hasPrefix(libraryPath) == false {
+                            let newFile = CustomFile(filePath: filePath, strDate: addedTime)
+                            result.append(newFile)
+                        }
+                    }
                 }
             }
             else {

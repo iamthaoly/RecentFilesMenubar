@@ -11,6 +11,10 @@ class Constants {
     
     static let QUERY_SECONDS = 1
     static let FILES_TO_SHOWN = 20
+    static let MAX_WINDOW_HEIGHT = 1000.0
+    static let LIST_ITEM_HEIGHT = 90.0
+    static let ALLOW_SYSTEM_FILE = false
+    static let NO_FILE_TEXT = "Create or add some files today to view them here 👀"
     
     // MARK: - DANGER!
     // DON'T EDIT THE FIELDS BELOW, IT WILL BREAK THE APP.

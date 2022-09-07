@@ -16,7 +16,8 @@ struct FileListView: View {
 
     var timer = Timer()
     @State private var isLoading = false
-
+    @State private var isDisplayEnableSpotlightAlert = true
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Recent Files")
@@ -25,7 +26,7 @@ struct FileListView: View {
                 .padding(.leading, 6)
             if manager.recentFileList.count == 0 || manager.queryNoResult {
                 if manager.queryNoResult {
-                    Text("Create or add some files today to view them here 👀")
+                    Text(Constants.NO_FILE_TEXT)
                         .foregroundColor(.white)
                         .padding(.leading, 6)
                         .padding(.top, 6)
@@ -52,7 +53,7 @@ struct FileListView: View {
                 }
             }
             VStack() {
-                ScrollView {
+                ScrollView(showsIndicators: manager.recentFileList.count >= 7) {
                     ForEach(manager.recentFileList) { fileItem in
                         FileItem(isSelected: .constant(currentHoverId == fileItem.id), item: fileItem)
                             .onHover { hover in
@@ -61,6 +62,7 @@ struct FileListView: View {
                     }
                 }
             }
+//            .frame(maxHeight: 600)
             VStack() {
                 Button(action: {
                     NSApplication.shared.terminate(nil)
@@ -73,11 +75,18 @@ struct FileListView: View {
             
 
         }
-        .frame(maxWidth: 350)
         .padding(.top, 16.0)
         .padding(.bottom, 32.0)
         .padding(/*@START_MENU_TOKEN@*/.horizontal, 25.0/*@END_MENU_TOKEN@*/)
         .background(backgroundColor)
+//        .alert(isPresented: $isDisplayEnableSpotlightAlert) {
+//            return Alert(title: Text("Convert completed"), message: Text(""), primaryButton: .default(Text("OK")){
+//                print("Click OK.")
+//            }, secondaryButton: .default(Text("Cancel")){
+//                print("Click Cancel.")
+//            })
+//            //                                Button("OK") { }
+//        }
     }
 }
 
@@ -114,8 +123,6 @@ struct FileItem: View {
                             .fill(Color.black)
                             .frame(width: geo.size.width / totalColumn * column[0], height: 80)
                     }
-
-                    
                     VStack(alignment: .leading, spacing: 6.0) {
                         Text(item.fileName)
                             .font(.system(size: 14))
@@ -153,12 +160,11 @@ struct FileItem: View {
                 .opacity(isSelected ? 1 : 0)
                     
             }
-            .frame(height: 90, alignment: .center)
+            .frame(height: Constants.LIST_ITEM_HEIGHT, alignment: .center)
             .padding(.all, 8.0)
             .foregroundColor(.gray)
             .background(RoundedRectangle(cornerRadius: 10).fill(isSelected ? onHoverColor: Color.clear))
             .clipped()
-        
     }
 }
 
